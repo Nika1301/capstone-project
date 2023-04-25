@@ -1,8 +1,8 @@
 import Link from "next/link";
+import styled from "styled-components";
+import Header from "@/src/components/Header/Header";
 import Country from "@/src/components/Country/Country";
 import { countries } from "@/lib/db";
-import Header from "@/src/components/Header/Header";
-import styled from "styled-components";
 
 const Stylemain = styled.main`
   margin-top: 7rem;
@@ -24,11 +24,8 @@ export default function Countries() {
               <ol>
                 {country.cities.map((city) => (
                   <ol key={city}>
-                    <Link href={`/DetailsTrip/`}>
-                      {city}
-                    </Link>
+                    <Link href={`/DetailsTrip/`}>{city}</Link>
                   </ol>
-                
                 ))}
               </ol>
             </ul>
