@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import {
   StyleButton,
   StyleList,
-  StyleCitySection,
   StyleDiv,
   StyleCountry,
   StyleSection,
