@@ -19,17 +19,16 @@ export default function Countries() {
       <Header title="All Countries" />
       <StyleSection className="country">
         <ul>
-          {countries.map((country) => {
+          {countries.map((country, index) => {
             return (
-              <li key={countries.id}>
+              <li key={index}>
                 <Country
                   nameOfCountry={country.name}
                   codeOfcountry={country.code}
                 />
-
                 <ul>
-                  {country.cities.map((city) => (
-                    <StyleList key={city.name}>
+                  {country.cities.map((city, index) => (
+                    <StyleList key={index}>
                       <Link href={`/DetailsTrip/${city.name}`}>
                         {city.name}
                       </Link>
