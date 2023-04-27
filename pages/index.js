@@ -18,25 +18,30 @@ export default function Countries() {
     <>
       <Header title="All Countries" />
       <StyleSection className="country">
-        {countries.map((country) => {
-          return (
-            <ul key={country.id}>
-              <Country
-                nameOfCountry={country.name}
-                codeOfcountry={country.code}
-              />
-              <ol>
-                {country.cities.map((city) => (
-                  <StyleList key={city.name}>
-                    <Link href={`/DetailsTrip/${city.name}`}>{city.name}</Link>
-                    <span>{city.startDate}</span>
-                    <span>{city.endDate}</span>
-                  </StyleList>
-                ))}
-              </ol>
-            </ul>
-          );
-        })}
+        <ul>
+          {countries.map((country) => {
+            return (
+              <li key={countries.id}>
+                <Country
+                  nameOfCountry={country.name}
+                  codeOfcountry={country.code}
+                />
+
+                <ul>
+                  {country.cities.map((city) => (
+                    <StyleList key={city.name}>
+                      <Link href={`/DetailsTrip/${city.name}`}>
+                        {city.name}
+                      </Link>
+                      <span>{city.startDate}</span>
+                      <span>{city.endDate}</span>
+                    </StyleList>
+                  ))}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
       </StyleSection>
     </>
   );
