@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 
-const StyleHeader = styled.div`
+const StyleHeader = styled.header`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -9,6 +9,7 @@ const StyleHeader = styled.div`
   position: fixed;
   top: 0;
   padding-right: 40%;
+
 
   @media screen and (max-width: 768px) {
     padding-right: 25%;
