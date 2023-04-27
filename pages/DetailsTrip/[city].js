@@ -8,7 +8,7 @@ import {
   StyleSpan,
   StyleH4,
   StyleTotalPrice,
-} from "./StyledTripDetails";
+} from "../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { countries } from "@/lib/db";
 
