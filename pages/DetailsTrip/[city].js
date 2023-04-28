@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 import {
   StyleButton,
   StyleList,
@@ -16,55 +17,40 @@ export default function DetailsOfTrip() {
   const router = useRouter();
   const cityName = router.query.city;
 
-  /* Get details about the city*/
   const country = countries.find((country) =>
     country.cities.find((city) => city.name === cityName)
   );
 
   const city = country?.cities.find((city) => city.name === cityName);
 
-  console.log(city);
-
   if (!city) {
     return <h2>City not found</h2>;
   }
 
-  /* Calculate Hotel Prices */
   const totalHotelPrice = city.hotel.map((hotel) => hotel.price);
-  console.log(totalHotelPrice);
   const totalPriceOfHotels = totalHotelPrice.reduce(
     (hotelPrice, price) => hotelPrice + Number(price),
     0
   );
-  console.log(totalPriceOfHotels);
 
-  /* Calculate Place Prices */
   const totalPlacePrice = city.place.map((place) => place.price);
-  console.log(totalPlacePrice);
   const totalPriceOfPlaces = totalPlacePrice.reduce(
     (placePrice, price) => placePrice + Number(price),
     0
   );
-  console.log(totalPriceOfPlaces);
 
-  /* Calculate food Prices */
   const totalFoodPrice = city.food.map((food) => food.price);
-  console.log(totalFoodPrice);
   const totalPriceeOfFoods = totalFoodPrice.reduce(
     (foodPrice, price) => foodPrice + Number(price),
     0
   );
-  console.log(totalPriceeOfFoods);
 
   let totalPrice = totalPriceOfHotels + totalPriceOfPlaces + totalPriceeOfFoods;
-  console.log(totalPrice);
 
-  /* Back to thr home page*/
   const backHome = () => {
     router.push("/");
   };
 
-  /* Return details about the City */
   return (
     <>
       <Header title="Details of traveling" />
@@ -72,16 +58,16 @@ export default function DetailsOfTrip() {
       <StyleSection>
         <StyleCountry>{country.name}</StyleCountry>
 
-        <StyleDiv>
-          <StyleH4>{city.name}</StyleH4>
-          <StyleSpan>
-            {city.startDate} - {city.endDate}
-          </StyleSpan>
-        </StyleDiv>
+        <StyleH4>
+          {city.name}
+          <StyleSpan>{city.startDate}</StyleSpan>
+          <StyleSpan>{city.endDate}</StyleSpan>
+        </StyleH4>
+
         <StyleH4>Hotels:</StyleH4>
         <ul>
           {city.hotel.map((hotel) => (
-            <StyleList key={hotel.name}>
+            <StyleList key={uuidv4()}>
               <StyleSpan>{hotel.name}</StyleSpan>
               <StyleSpan>{hotel.price} Euro</StyleSpan>
             </StyleList>
@@ -96,14 +82,13 @@ export default function DetailsOfTrip() {
         <StyleH4>Places to visit:</StyleH4>
         <ul>
           {city.place.map((place) => (
-            <StyleList key={place.name}>
+            <StyleList key={uuidv4()}>
               <StyleDiv>
                 <StyleSpan>{place.name}</StyleSpan>
                 <StyleSpan> {place.price} Euro</StyleSpan>
               </StyleDiv>
             </StyleList>
           ))}
-
           <StyleDiv>
             <StyleTotalPrice>Total Price:</StyleTotalPrice>
             <p>{totalPriceOfPlaces} Euro</p>
@@ -112,7 +97,7 @@ export default function DetailsOfTrip() {
         <StyleH4>Food to try:</StyleH4>
         <ul>
           {city.food.map((food) => (
-            <StyleList key={food.name}>
+            <StyleList key={uuidv4()}>
               <StyleDiv>
                 <StyleSpan>{food.name}</StyleSpan>
                 <StyleSpan>{food.price} Euro</StyleSpan>

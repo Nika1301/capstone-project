@@ -13,6 +13,8 @@ export const StyleButton = styled.button`
 `;
 export const StyleSpan = styled.span`
   font-family: "Lobster", cursive;
+  display: inline;
+  margin-left: 20px;
   @media screen and (max-width: 768px) {
     margin-right: 1rem;
     font-size: 18px;
@@ -48,7 +50,7 @@ export const StyleCitySection = styled.section`
 `;
 export const StyleDiv = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
 `;
 
 export const StyleCountry = styled.h2`

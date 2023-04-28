@@ -1,5 +1,5 @@
-import Link from "next/link";
 import styled from "styled-components";
+import Link from "next/link";
 import Header from "@/src/components/Header/Header";
 import Country from "@/src/components/Country/Country";
 import { countries } from "@/lib/db";
@@ -13,22 +13,23 @@ const StyleList = styled.li`
   display: flex;
   gap: 2rem;
 `;
+
 export default function Countries() {
   return (
     <>
       <Header title="All Countries" />
       <StyleSection className="country">
         <ul>
-          {countries.map((country, index) => {
+          {countries.map((country) => {
             return (
-              <li key={index}>
+              <li key={country.id}>
                 <Country
                   nameOfCountry={country.name}
                   codeOfcountry={country.code}
                 />
                 <ul>
-                  {country.cities.map((city, index) => (
-                    <StyleList key={index}>
+                  {country.cities.map((city) => (
+                    <StyleList key={city.id}>
                       <Link href={`/DetailsTrip/${city.name}`}>
                         {city.name}
                       </Link>
