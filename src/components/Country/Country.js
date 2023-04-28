@@ -1,10 +1,7 @@
-export default function Country({ nameOfCountry, codeOfcountry, nameOfCity }) {
+export default function Country({ nameOfCountry, codeOfcountry }) {
   return (
-    <>
-      <li>
-        {nameOfCountry} - {codeOfcountry}
-      </li>
-      <div className="city">{nameOfCity}</div>
-    </>
+    <p>
+      {nameOfCountry} - {codeOfcountry}
+    </p>
   );
 }
