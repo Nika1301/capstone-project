@@ -1,51 +1,51 @@
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import {
-  StyleButton,
-  StyleList,
-  StyleDiv,
-  StyleCountry,
-  StyleSection,
-  StyleSpan,
-  StyleH4,
-  StyleTotalPrice,
+  StyledButton,
+  StyledList,
+  StyledDiv,
+  StyledCountry,
+  StyledSection,
+  StyledSpan,
+  StyledH4,
+  StyledTotalPrice,
 } from "../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
-import { countries } from "@/lib/db";
+import { useAppStore } from "@/lib/store";
 
 export default function DetailsOfTrip() {
   const router = useRouter();
   const cityName = router.query.city;
-
+  const { countries } = useAppStore();
   const country = countries.find((country) =>
-    country.cities.find((city) => city.name === cityName)
+    country.cities.find((city) => city.city === cityName)
   );
 
-  const city = country?.cities.find((city) => city.name === cityName);
+  const city = country?.cities.find((city) => city.city === cityName);
 
   if (!city) {
     return <h2>City not found</h2>;
   }
 
-  const totalHotelPrice = city.hotel.map((hotel) => hotel.price);
+  const totalHotelPrice = city.hotels.map((hotel) => hotel.hotelPrice);
   const totalPriceOfHotels = totalHotelPrice.reduce(
     (hotelPrice, price) => hotelPrice + Number(price),
     0
   );
 
-  const totalPlacePrice = city.place.map((place) => place.price);
+  const totalPlacePrice = city.places.map((place) => place.placePrice);
   const totalPriceOfPlaces = totalPlacePrice.reduce(
     (placePrice, price) => placePrice + Number(price),
     0
   );
 
-  const totalFoodPrice = city.food.map((food) => food.price);
-  const totalPriceeOfFoods = totalFoodPrice.reduce(
+  const totalFoodPrice = city.food.map((food) => food.foodPrice);
+  const totalPriceOfFoods = totalFoodPrice.reduce(
     (foodPrice, price) => foodPrice + Number(price),
     0
   );
 
-  let totalPrice = totalPriceOfHotels + totalPriceOfPlaces + totalPriceeOfFoods;
+  let totalPrice = totalPriceOfHotels + totalPriceOfPlaces + totalPriceOfFoods;
 
   const backHome = () => {
     router.push("/");
@@ -54,69 +54,67 @@ export default function DetailsOfTrip() {
   return (
     <>
       <Header title="Details of traveling" />
-      <StyleButton onClick={backHome}> Home</StyleButton>
-      <StyleSection>
-        <StyleCountry>{country.name}</StyleCountry>
-
-        <StyleH4>
-          {city.name}
-          <StyleSpan>{city.startDate}</StyleSpan>
-          <StyleSpan>{city.endDate}</StyleSpan>
-        </StyleH4>
-
-        <StyleH4>Hotels:</StyleH4>
+      <StyledButton onClick={backHome}> Home</StyledButton>
+      <StyledSection>
+        <StyledCountry>{country.country}</StyledCountry>
+        <StyledH4>
+          {city.city}
+          <StyledSpan>{city.startDate}</StyledSpan>
+          <StyledSpan>{city.endDate}</StyledSpan>
+        </StyledH4>
+        <StyledH4>Hotels:</StyledH4>
         <ul>
-          {city.hotel.map((hotel) => (
-            <StyleList key={uuidv4()}>
-              <StyleSpan>{hotel.name}</StyleSpan>
-              <StyleSpan>{hotel.price} Euro</StyleSpan>
-            </StyleList>
+          {city.hotels.map((hotel) => (
+            <StyledList key={uuidv4()}>
+              <StyledSpan>{hotel.hotel}</StyledSpan>
+              <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
+            </StyledList>
           ))}
 
-          <StyleDiv>
-            <StyleTotalPrice>Total Price:</StyleTotalPrice>
+          <StyledDiv>
+            <StyledTotalPrice>Total Price:</StyledTotalPrice>
             <p>{totalPriceOfHotels} Euro</p>
-          </StyleDiv>
+          </StyledDiv>
         </ul>
 
-        <StyleH4>Places to visit:</StyleH4>
+        <StyledH4>Places to visit:</StyledH4>
         <ul>
-          {city.place.map((place) => (
-            <StyleList key={uuidv4()}>
-              <StyleDiv>
-                <StyleSpan>{place.name}</StyleSpan>
-                <StyleSpan> {place.price} Euro</StyleSpan>
-              </StyleDiv>
-            </StyleList>
+          {city.places.map((place) => (
+            <StyledList key={uuidv4()}>
+              <StyledDiv>
+                <StyledSpan>{place.place}</StyledSpan>
+                <StyledSpan> {place.placePrice} Euro</StyledSpan>
+              </StyledDiv>
+            </StyledList>
           ))}
-          <StyleDiv>
-            <StyleTotalPrice>Total Price:</StyleTotalPrice>
+          <StyledDiv>
+            <StyledTotalPrice>Total Price:</StyledTotalPrice>
             <p>{totalPriceOfPlaces} Euro</p>
-          </StyleDiv>
+          </StyledDiv>
         </ul>
-        <StyleH4>Food to try:</StyleH4>
+        <StyledH4>Food to try:</StyledH4>
         <ul>
           {city.food.map((food) => (
-            <StyleList key={uuidv4()}>
-              <StyleDiv>
-                <StyleSpan>{food.name}</StyleSpan>
-                <StyleSpan>{food.price} Euro</StyleSpan>
-              </StyleDiv>
-            </StyleList>
+            <StyledList key={uuidv4()}>
+              <StyledDiv>
+                <StyledSpan>{food.foodName}</StyledSpan>
+                <StyledSpan>{food.foodPrice} Euro</StyledSpan>
+              </StyledDiv>
+            </StyledList>
           ))}
 
-          <StyleDiv>
-            <StyleTotalPrice>Total Price:</StyleTotalPrice>
-            <p>{totalPriceeOfFoods} Euro</p>
-          </StyleDiv>
+          <StyledDiv>
+            <StyledTotalPrice>Total Price:</StyledTotalPrice>
+            <p>{totalPriceOfFoods} Euro</p>
+          </StyledDiv>
         </ul>
-        <StyleDiv>
-          <StyleTotalPrice>How much I spent on the trip:</StyleTotalPrice>
+        <StyledDiv>
+          <StyledTotalPrice>How much I spent on the trip:</StyledTotalPrice>
           <p>{totalPrice} Euro </p>
-        </StyleDiv>
-        <StyleH4>Notes:</StyleH4>
+        </StyledDiv>
+        <StyledH4>Notes:</StyledH4>
         <p>{city.note}</p>
-      </StyleSection>
+      </StyledSection>
     </>
   );
 }

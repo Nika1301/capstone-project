@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 
-const StyleHeader = styled.header`
+const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -18,7 +18,7 @@ const StyleHeader = styled.header`
   }
 `;
 
-const StyleImage = styled(Image)`
+const StyledImage = styled(Image)`
   border-radius: 25px;
   margin-top: 1rem;
   margin-left: 1rem;
@@ -30,10 +30,10 @@ const StyleImage = styled(Image)`
 export default function Header({ title }) {
   return (
     <>
-      <StyleHeader>
-        <StyleImage src="/logo.png" alt="My Logo" width={50} height={50} />
+      <StyledHeader>
+        <StyledImage src="/logo.png" alt="My Logo" width={50} height={50} />
         <h1>{title}</h1>
-      </StyleHeader>
+      </StyledHeader>
     </>
   );
 }
