@@ -23,7 +23,7 @@ import CreateFood from "../Food";
 
 export default function Form() {
   const router = useRouter();
-  const  addCity  = useAppStore((state) => state.addCity);
+  const addCity = useAppStore((state) => state.addCity);
 
   const [hotels, setHotels] = useState([
     { id: uuidv4(), hotel: "", hotelPrice: "" },

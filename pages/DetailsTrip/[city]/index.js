@@ -10,7 +10,7 @@ import {
   StyledLink,
   StyledTotalPrice,
   StyledUl,
-} from "../StyledTripDetails";
+} from "../../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
 
