@@ -6,7 +6,7 @@ import { countries } from "@/lib/db";
 import Header from "../Header/Header";
 import {
   StyledButton,
-  StyledBackHomeButton,
+  StyledLink,
   StyledFormContainer,
   StyledInput,
   StyledTextarea,
@@ -23,6 +23,8 @@ import CreateFood from "../Food";
 
 export default function Form() {
   const router = useRouter();
+  const  addCity  = useAppStore((state) => state.addCity);
+
   const [hotels, setHotels] = useState([
     { id: uuidv4(), hotel: "", hotelPrice: "" },
   ]);
@@ -34,12 +36,12 @@ export default function Form() {
     { id: uuidv4(), foodName: "", foodPrice: "" },
   ]);
 
-  const { addCity } = useAppStore();
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
     addCity({ ...data, hotels: hotels, places: places, food: food });
     event.target.reset();
+    console.log(data);
     router.push("/");
   }
 
@@ -84,17 +86,13 @@ export default function Form() {
     );
   }
 
-  const backHome = () => {
-    router.push("/");
-  };
   return (
     <>
       <Header title="Create Your Travel" />
-      <StyledBackHomeButton onClick={backHome}>Back</StyledBackHomeButton>
+      <StyledLink href="/">Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>
-        <StyledSelect id="countryName" name="country" required>
-          <option>...select country</option>
+        <StyledSelect id="countryName" name="countryID" required>
           {countries.map((country) => (
             <option key={country.id} value={country.id}>
               {country.country}

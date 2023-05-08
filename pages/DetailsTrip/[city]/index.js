@@ -1,15 +1,16 @@
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import {
-  StyledButton,
   StyledList,
   StyledDiv,
   StyledCountry,
   StyledSection,
   StyledSpan,
   StyledH4,
+  StyledLink,
   StyledTotalPrice,
-} from "../../src/components/StyledTripDetails";
+  StyledUl,
+} from "../StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
 
@@ -18,10 +19,10 @@ export default function DetailsOfTrip() {
   const cityName = router.query.city;
   const { countries } = useAppStore();
   const country = countries.find((country) =>
-    country.cities.find((city) => city.city === cityName)
+    country.cities.find((city) => city.id === cityName)
   );
 
-  const city = country?.cities.find((city) => city.city === cityName);
+  const city = country?.cities.find((city) => city.id === cityName);
 
   if (!city) {
     return <h2>City not found</h2>;
@@ -47,70 +48,72 @@ export default function DetailsOfTrip() {
 
   let totalPrice = totalPriceOfHotels + totalPriceOfPlaces + totalPriceOfFoods;
 
-  const backHome = () => {
-    router.push("/");
-  };
-
   return (
     <>
       <Header title="Details of traveling" />
-      <StyledButton onClick={backHome}> Home</StyledButton>
+      <StyledLink href="/"> Home</StyledLink>
       <StyledSection>
         <StyledCountry>{country.country}</StyledCountry>
         <StyledH4>
           {city.city}
-          <StyledSpan>{city.startDate}</StyledSpan>
-          <StyledSpan>{city.endDate}</StyledSpan>
+          {city.startDate && city.endDate ? (
+            <StyledSpan>
+              {city.startDate} - {city.endDate}
+            </StyledSpan>
+          ) : null}
         </StyledH4>
         <StyledH4>Hotels:</StyledH4>
-        <ul>
+        <StyledUl>
           {city.hotels.map((hotel) => (
             <StyledList key={uuidv4()}>
               <StyledSpan>{hotel.hotel}</StyledSpan>
-              <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
+              {hotel.hotelPrice ? (
+                <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
+              ) : null}
             </StyledList>
           ))}
 
           <StyledDiv>
             <StyledTotalPrice>Total Price:</StyledTotalPrice>
-            <p>{totalPriceOfHotels} Euro</p>
+            <StyledTotalPrice>{totalPriceOfHotels} Euro</StyledTotalPrice>
           </StyledDiv>
-        </ul>
+        </StyledUl>
 
         <StyledH4>Places to visit:</StyledH4>
-        <ul>
+        <StyledUl>
           {city.places.map((place) => (
             <StyledList key={uuidv4()}>
-              <StyledDiv>
-                <StyledSpan>{place.place}</StyledSpan>
-                <StyledSpan> {place.placePrice} Euro</StyledSpan>
-              </StyledDiv>
+              <StyledSpan>{place.place}</StyledSpan>
+              {place.placePrice ? (
+                <StyledSpan> {place.placePrice} Euro </StyledSpan>
+              ) : null}
             </StyledList>
           ))}
-          <StyledDiv>
-            <StyledTotalPrice>Total Price:</StyledTotalPrice>
-            <p>{totalPriceOfPlaces} Euro</p>
-          </StyledDiv>
-        </ul>
+        </StyledUl>
+        <StyledDiv>
+          <StyledTotalPrice>Total Price:</StyledTotalPrice>
+          <StyledTotalPrice>{totalPriceOfPlaces} Euro</StyledTotalPrice>
+        </StyledDiv>
+
         <StyledH4>Food to try:</StyledH4>
-        <ul>
+        <StyledUl>
           {city.food.map((food) => (
             <StyledList key={uuidv4()}>
-              <StyledDiv>
-                <StyledSpan>{food.foodName}</StyledSpan>
+              <StyledSpan>{food.foodName}</StyledSpan>
+              {food.foodPrice ? (
                 <StyledSpan>{food.foodPrice} Euro</StyledSpan>
-              </StyledDiv>
+              ) : null}
             </StyledList>
           ))}
-
-          <StyledDiv>
-            <StyledTotalPrice>Total Price:</StyledTotalPrice>
-            <p>{totalPriceOfFoods} Euro</p>
-          </StyledDiv>
-        </ul>
+        </StyledUl>
         <StyledDiv>
-          <StyledTotalPrice>How much I spent on the trip:</StyledTotalPrice>
-          <p>{totalPrice} Euro </p>
+          <StyledTotalPrice>Total Price:</StyledTotalPrice>
+          <StyledTotalPrice> {totalPriceOfFoods} Euro</StyledTotalPrice>
+        </StyledDiv>
+
+        <StyledDiv>
+          <StyledTotalPrice>How much I spent on the trip:</StyledTotalPrice>{" "}
+          <StyledTotalPrice>{totalPrice} Euro</StyledTotalPrice>
         </StyledDiv>
         <StyledH4>Notes:</StyledH4>
         <p>{city.note}</p>
