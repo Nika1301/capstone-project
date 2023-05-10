@@ -20,6 +20,7 @@ import {
 import CreateHotel from "../Hotel";
 import CreatePlace from "../Place";
 import CreateFood from "../Food";
+import Footer from "../Footer/Footer";
 
 export default function Form() {
   const router = useRouter();
@@ -125,7 +126,7 @@ export default function Form() {
           <StyledDivSection>
             {hotels.map((hotel) => (
               <CreateHotel
-                key={hotel.hotel}
+                key={hotel.id}
                 handleHotelChange={handleHotelChange}
                 hotel={hotel}
               />
@@ -141,7 +142,7 @@ export default function Form() {
           <StyledDivSection>
             {places.map((place) => (
               <CreatePlace
-                key={place.place}
+                key={place.id}
                 handlePlaceChange={handlePlaceChange}
                 place={place}
               />
@@ -156,7 +157,7 @@ export default function Form() {
           <StyledDivSection>
             {food.map((food) => (
               <CreateFood
-                key={food.foodName}
+                key={food.id}
                 handleFoodChange={handleFoodChange}
                 food={food}
               />
@@ -178,6 +179,7 @@ export default function Form() {
 
         <StyledButton type="submit">Create</StyledButton>
       </StyledFormContainer>
+      <Footer />
     </>
   );
 }

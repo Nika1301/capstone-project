@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
 ``;
 import { useAppStore } from "@/lib/store";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import {
   StyledButton,
   StyledLink,
@@ -17,91 +15,52 @@ import {
   StyledDivSection,
 } from "@/src/components/CityCreateForm/StyledCityCreate";
 import Header from "@/src/components/Header/Header";
-import CreatePlace from "@/src/components/Place";
-import CreateHotel from "@/src/components/Hotel";
-import CreateFood from "@/src/components/Food";
-
+import PlaceList from "@/src/components/PlaceList";
+import FoodList from "@/src/components/FoodList";
+import HotelList from "@/src/components/HotelList";
+import Footer from "@/src/components/Footer/Footer";
 export default function EditCity() {
   const router = useRouter();
   const cityId = router.query.city;
-  const findCityByID = useAppStore((state) => state.findCityByID);
-  const updateCity = useAppStore((state) => state.updateCity);
-  const city = findCityByID(cityId);
-  const [hotels, setHotels] = useState([
-    { id: uuidv4(), hotel: "", hotelPrice: "" },
-  ]);
+  const { updateHotels, updatePlaces, updateFood } = useAppStore();
 
-  const [places, setPlaces] = useState([
-    { id: uuidv4(), place: "", placePrice: "" },
-  ]);
-  const [food, setFood] = useState([
-    { id: uuidv4(), foodName: "", foodPrice: "" },
-  ]);
+  const city = useAppStore((state) => {
+    const countries = state.countries;
+    const cities = countries
+      .map((country) =>
+        country.cities.map((city) => ({
+          ...city,
+          country: country.country,
+        }))
+      )
+      .flat();
+    return cities.find((city) => city.id === cityId);
+  });
 
-  useEffect(() => {
-    if (!city) {
-      return;
-    }
-    setHotels(city.hotels);
-    setPlaces(city.places);
-    setFood(city.food);
-  }, [city]);
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    const data = Object.fromEntries(new FormData(event.target));
-
-    updateCity(cityId, { ...data, hotels, places, food });
-    // console.log("Update:", data);
-    event.target.reset();
-    router.push("/");
-  }
+  const { updateCity } = useAppStore();
 
   if (!city) {
     return null;
   }
-  function handleHotelClick() {
-    setHotels([...hotels, { id: uuidv4(), hotel: "", hotelPrice: "" }]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(event.target));
+    updateCity(cityId, { ...data });
+    event.target.reset();
+    router.push("/");
   }
 
   function handleHotelChange(newHotel) {
-    console.log("Hotel", newHotel);
-    setHotels(
-      hotels.map((hotel) => {
-        if (hotel.id === newHotel.id) {
-          return newHotel;
-        }
-        return hotel;
-      })
-    );
+    updateHotels(cityId, newHotel);
   }
 
-  function handlePlaceClick() {
-    setPlaces([...places, { id: uuidv4(), place: "", placePrice: "" }]);
-  }
   function handlePlaceChange(newPlace) {
-    setPlaces(
-      places.map((place) => {
-        if (place.id === newPlace.id) {
-          return newPlace;
-        }
-        return place;
-      })
-    );
+    updatePlaces(cityId, newPlace);
   }
 
-  function handleFoodClick() {
-    setFood([...food, { id: uuidv4(), foodName: "", foodPrice: "" }]);
-  }
   function handleFoodChange(newFood) {
-    setFood(
-      food.map((food) => {
-        if (food.id === newFood.id) {
-          return newFood;
-        }
-        return food;
-      })
-    );
+    updateFood(cityId, newFood);
   }
 
   return (
@@ -146,61 +105,33 @@ export default function EditCity() {
         </StyledDiv>
         <StyledSection>
           <StyledDivSection>
-            {hotels.map((hotel) => (
-              <CreateHotel
-                key={hotel.hotel}
-                hotel={hotel}
-                handleHotelChange={handleHotelChange}
-              />
-            ))}
+            <HotelList city={city} handleHotelChange={handleHotelChange} />
           </StyledDivSection>
-
-          <StyledButton type="button" onClick={handleHotelClick}>
-            Add
-          </StyledButton>
         </StyledSection>
 
         <StyledSection>
           <StyledDivSection>
-            {places.map((place) => (
-              <CreatePlace
-                key={place.place}
-                place={place}
-                handlePlaceChange={handlePlaceChange}
-              />
-            ))}
+            <PlaceList city={city} handlePlaceChange={handlePlaceChange} />
           </StyledDivSection>
-          <StyledButton type="button" onClick={handlePlaceClick}>
-            Add
-          </StyledButton>
         </StyledSection>
 
         <StyledSection>
           <StyledDivSection>
-            {food.map((food) => (
-              <CreateFood
-                key={food.foodName}
-                food={food}
-                handleFoodChange={handleFoodChange}
-              />
-            ))}
+            <FoodList city={city} handleFoodChange={handleFoodChange} />
           </StyledDivSection>
-
-          <StyledButton type="button" onClick={handleFoodClick}>
-            Add
-          </StyledButton>
         </StyledSection>
         <StyledLabel htmlFor="notes">Notes:</StyledLabel>
         <StyledTextarea
           name="note"
           id="notes"
-          cols="30"
+          cols="20"
           rows="10"
           defaultValue={city.note}
         ></StyledTextarea>
 
         <StyledButton type="submit">Save</StyledButton>
       </StyledFormContainer>
+      <Footer />
     </>
   );
 }

@@ -11,11 +11,12 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
   const [hotelName, setHotelName] = useState("");
   const [dayshotel, setDayshotel] = useState(hotel.hotelDay || 0);
   const [dayprice, setDayprice] = useState(hotel.dayPrice || 0);
+
   function handleChange(event) {
     setHotelName(event.target.value);
     handleHotelChange({
       id: hotel.id,
-      hotel: hotelName,
+      hotel: event.target.value,
       hotelDay: dayshotel,
       dayPrice: dayprice,
       hotelPrice: dayshotel * dayprice,

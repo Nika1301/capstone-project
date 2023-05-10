@@ -17,7 +17,7 @@ import {
 } from "../../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
-
+import Footer from "@/src/components/Footer/Footer";
 export default function DetailsOfTrip() {
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const router = useRouter();
@@ -27,7 +27,6 @@ export default function DetailsOfTrip() {
   const country = countries.find((country) =>
     country.cities.find((city) => city.id === cityName)
   );
-  // console.log(countries[0]);
   const city = country?.cities.find((city) => city.id === cityName);
 
   if (!city) {
@@ -149,6 +148,7 @@ export default function DetailsOfTrip() {
         <StyledH4>Notes:</StyledH4>
         <p>{city.note}</p>
       </StyledSection>
+      <Footer />
     </>
   );
 }
