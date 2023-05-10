@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { useRouter } from "next/router";
+``;
 import { useAppStore } from "@/lib/store";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { countries } from "@/lib/db";
-import Header from "../Header/Header";
 import {
   StyledButton,
   StyledLink,
@@ -16,15 +15,18 @@ import {
   StyledSelect,
   StyledSection,
   StyledDivSection,
-} from "./StyledCityCreate";
-import CreateHotel from "../Hotel";
-import CreatePlace from "../Place";
-import CreateFood from "../Food";
+} from "@/src/components/CityCreateForm/StyledCityCreate";
+import Header from "@/src/components/Header/Header";
+import CreatePlace from "@/src/components/Place";
+import CreateHotel from "@/src/components/Hotel";
+import CreateFood from "@/src/components/Food";
 
-export default function Form() {
+export default function EditCity() {
   const router = useRouter();
-  const addCity = useAppStore((state) => state.addCity);
-
+  const cityId = router.query.city;
+  const findCityByID = useAppStore((state) => state.findCityByID);
+  const updateCity = useAppStore((state) => state.updateCity);
+  const city = findCityByID(cityId);
   const [hotels, setHotels] = useState([
     { id: uuidv4(), hotel: "", hotelPrice: "" },
   ]);
@@ -36,19 +38,34 @@ export default function Form() {
     { id: uuidv4(), foodName: "", foodPrice: "" },
   ]);
 
+  useEffect(() => {
+    if (!city) {
+      return;
+    }
+    setHotels(city.hotels);
+    setPlaces(city.places);
+    setFood(city.food);
+  }, [city]);
+
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
-    addCity({ ...data, hotels: hotels, places: places, food: food });
+
+    updateCity(cityId, { ...data, hotels, places, food });
+    // console.log("Update:", data);
     event.target.reset();
     router.push("/");
   }
 
+  if (!city) {
+    return null;
+  }
   function handleHotelClick() {
     setHotels([...hotels, { id: uuidv4(), hotel: "", hotelPrice: "" }]);
   }
+
   function handleHotelChange(newHotel) {
-    console.log(newHotel);
+    console.log("Hotel", newHotel);
     setHotels(
       hotels.map((hotel) => {
         if (hotel.id === newHotel.id) {
@@ -89,18 +106,13 @@ export default function Form() {
 
   return (
     <>
-      <Header title="Create Your Travel" />
-      <StyledLink href="/">Back</StyledLink>
+      <Header title="Edit Your Travel" />
+      <StyledLink href={`/DetailsTrip/${city.id}`}>Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>
         <StyledSelect id="countryName" name="countryID" required>
-          {countries.map((country) => (
-            <option key={country.id} value={country.id}>
-              {country.country}
-            </option>
-          ))}
+          <option>{city.country}</option>
         </StyledSelect>
-
         <StyledDiv>
           <div>
             <StyledLabel htmlFor="cityName">Add city:</StyledLabel>
@@ -109,16 +121,27 @@ export default function Form() {
               name="city"
               type="text"
               placeholder="...add city"
+              defaultValue={city.city}
               required
             />
           </div>
           <div>
             <StyledLabel htmlFor="startDate">Start date:</StyledLabel>
-            <StyledInputSmall id="startDate" name="startDate" type="date" />
+            <StyledInputSmall
+              id="startDate"
+              name="startDate"
+              type="date"
+              defaultValue={city.startDate}
+            />
           </div>
           <div>
             <StyledLabel htmlFor="endDate">End date:</StyledLabel>
-            <StyledInputSmall id="endDate" name="endDate" type="date" />
+            <StyledInputSmall
+              id="endDate"
+              name="endDate"
+              type="date"
+              defaultValue={city.endDate}
+            />
           </div>
         </StyledDiv>
         <StyledSection>
@@ -126,8 +149,8 @@ export default function Form() {
             {hotels.map((hotel) => (
               <CreateHotel
                 key={hotel.hotel}
-                handleHotelChange={handleHotelChange}
                 hotel={hotel}
+                handleHotelChange={handleHotelChange}
               />
             ))}
           </StyledDivSection>
@@ -142,8 +165,8 @@ export default function Form() {
             {places.map((place) => (
               <CreatePlace
                 key={place.place}
-                handlePlaceChange={handlePlaceChange}
                 place={place}
+                handlePlaceChange={handlePlaceChange}
               />
             ))}
           </StyledDivSection>
@@ -157,8 +180,8 @@ export default function Form() {
             {food.map((food) => (
               <CreateFood
                 key={food.foodName}
-                handleFoodChange={handleFoodChange}
                 food={food}
+                handleFoodChange={handleFoodChange}
               />
             ))}
           </StyledDivSection>
@@ -173,10 +196,10 @@ export default function Form() {
           id="notes"
           cols="30"
           rows="10"
-          placeholder="...add your notes"
+          defaultValue={city.note}
         ></StyledTextarea>
 
-        <StyledButton type="submit">Create</StyledButton>
+        <StyledButton type="submit">Save</StyledButton>
       </StyledFormContainer>
     </>
   );

@@ -8,7 +8,7 @@ import { useState } from "react";
 
 export default function CreatePlace({ place, handlePlaceChange }) {
   const [placeName, setPlacelName] = useState("");
-  const [placePrice, setPlacePrice] = useState(0);
+  const [placePrice, setPlacePrice] = useState(place.placePrice || 0);
   function handleChange(event) {
     setPlacelName(event.target.value);
     handlePlaceChange({
@@ -27,6 +27,7 @@ export default function CreatePlace({ place, handlePlaceChange }) {
           type="text"
           placeholder="..add place"
           onChange={handleChange}
+          defaultValue={place.place}
         />
       </div>
       <div>
@@ -44,6 +45,7 @@ export default function CreatePlace({ place, handlePlaceChange }) {
               placePrice: parseInt(event.target.value),
             });
           }}
+          defaultValue={placePrice}
         />
       </div>
     </StyledDiv>

@@ -30,7 +30,6 @@ export const StyledFormContainer = styled.form`
   margin-top: 6rem;
   @media (max-width: 768px) {
     width: 180%;
- 
   }
 `;
 
@@ -78,6 +77,9 @@ export const StyledSelect = styled.select`
   padding: 0.5rem;
   font-size: 1.5em;
   margin-right: 1rem;
+  option {
+    height: 50px;
+  }
 `;
 export const StyledDivSection = styled.div`
   flex-direction: column;
@@ -103,17 +105,18 @@ export const StyledLink = styled(Link)`
   font-weight: bold;
   border: solid;
   border-color: yellow;
-  border-radius: 50%;
-  font-size: 0.8em;
+  border-radius: 20%;
+  font-size: 1em;
   padding: 0.5rem;
-  margin-left: 1rem;
+  top: 6rem;
+  left: 1rem;
   text-decoration: none;
   text-align: center;
   &:hover {
     color: #0d5c63;
     background-color: yellow;
-    border-color: #0d5c63;
     border: solid;
+    border-color: #0d5c63;
   }
   &:active {
     transform: scale(0.95);

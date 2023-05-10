@@ -9,14 +9,15 @@ import { useState } from "react";
 
 export default function CreateHotel({ hotel, handleHotelChange }) {
   const [hotelName, setHotelName] = useState("");
-  const [dayshotel, setDayshotel] = useState(0);
-  const [dayprice, setDayprice] = useState(0);
-
+  const [dayshotel, setDayshotel] = useState(hotel.hotelDay || 0);
+  const [dayprice, setDayprice] = useState(hotel.dayPrice || 0);
   function handleChange(event) {
     setHotelName(event.target.value);
     handleHotelChange({
       id: hotel.id,
       hotel: hotelName,
+      hotelDay: dayshotel,
+      dayPrice: dayprice,
       hotelPrice: dayshotel * dayprice,
     });
   }
@@ -31,6 +32,7 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           type="text"
           placeholder="...add hotel name"
           onChange={handleChange}
+          defaultValue={hotel.hotel}
         />
       </div>
       <div>
@@ -44,9 +46,12 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
+              hotelDay: dayshotel,
+              dayPrice: dayprice,
               hotelPrice: parseInt(event.target.value) * dayprice,
             });
           }}
+          defaultValue={hotel.hotelDay}
         />
       </div>
       <div>
@@ -60,9 +65,12 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
+              hotelDay: dayshotel,
+              dayPrice: dayprice,
               hotelPrice: parseInt(event.target.value) * dayshotel,
             });
           }}
+          defaultValue={hotel.dayPrice}
         />
       </div>
       <StyledTotalPrice>{dayprice * dayshotel}</StyledTotalPrice>

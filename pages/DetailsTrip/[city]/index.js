@@ -13,6 +13,7 @@ import {
   StyledUl,
   StyledButtonDelete,
   StyledPopup,
+  StyledEditLink,
 } from "../../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
@@ -26,7 +27,7 @@ export default function DetailsOfTrip() {
   const country = countries.find((country) =>
     country.cities.find((city) => city.id === cityName)
   );
-
+  // console.log(countries[0]);
   const city = country?.cities.find((city) => city.id === cityName);
 
   if (!city) {
@@ -69,6 +70,9 @@ export default function DetailsOfTrip() {
     <>
       <Header title="Details of traveling" />
       <StyledLink href="/"> Home</StyledLink>
+      <StyledEditLink href={`/DetailsTrip/${city.id}/edit`}>
+        Edit
+      </StyledEditLink>
       <StyledButtonDelete onClick={() => setShowConfirmPopup(true)}>
         Delete
       </StyledButtonDelete>
