@@ -48,7 +48,7 @@ export default function EditCity() {
     const data = Object.fromEntries(new FormData(event.target));
     updateCity(cityId, { ...data });
     event.target.reset();
-    router.push("/");
+    router.push(`/DetailsTrip/${city.id}`);
   }
 
   function handleHotelChange(newHotel) {
