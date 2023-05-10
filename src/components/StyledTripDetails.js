@@ -134,3 +134,61 @@ export const StyledEditLink = styled(Link)`
     transform: scale(0.95);
   }
 `;
+export const StyledButtonDelete = styled.button`
+  position: fixed;
+  color: yellow;
+  background-color: #0d5c63;
+  font-weight: bold;
+  border: solid;
+  border-color: yellow;
+  border-radius: 20%;
+  font-size: 0.5em;
+  padding: 0.3rem;
+  top: 6rem;
+  right: 4rem;
+  text-decoration: none;
+  text-align: center;
+  &:hover {
+    color: #0d5c63;
+    background-color: yellow;
+    border: solid;
+    border-color: #0d5c63;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+export const StyledPopup = styled.div`
+  height: 400px;
+  width: 600px;
+  background-color: #2ec4b6;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+
+  p {
+    font-size: 1.5em;
+    margin-top: 3rem;
+    padding: 2rem;
+  }
+
+  button {
+    font-size: 1.2em;
+    margin: 0 2rem ;
+    color: green;
+    padding: 1rem;
+  }
+
+  button:last-child {
+    color: red;
+  }
+
+  @media (max-width: 414px) {
+    height: 40%;
+    width: 80%;
+  }
+`;

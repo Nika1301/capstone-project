@@ -41,7 +41,6 @@ export default function Form() {
     const data = Object.fromEntries(new FormData(event.target));
     addCity({ ...data, hotels: hotels, places: places, food: food });
     event.target.reset();
-    console.log(data);
     router.push("/");
   }
 
@@ -58,6 +57,7 @@ export default function Form() {
       })
     );
   }
+
   function handlePlaceClick() {
     setPlaces([...places, { id: uuidv4(), place: "", placePrice: "" }]);
   }
@@ -149,6 +149,7 @@ export default function Form() {
           <StyledButton type="button" onClick={handlePlaceClick}>
             Add
           </StyledButton>
+  
         </StyledSection>
 
         <StyledSection>
