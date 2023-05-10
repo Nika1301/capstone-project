@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 import {
   StyledList,
   StyledDiv,
@@ -10,14 +11,18 @@ import {
   StyledLink,
   StyledTotalPrice,
   StyledUl,
+  StyledButtonDelete,
+  StyledPopup,
 } from "../../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
 
 export default function DetailsOfTrip() {
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const router = useRouter();
   const cityName = router.query.city;
-  const { countries } = useAppStore();
+  const { countries, deleteCity } = useAppStore();
+
   const country = countries.find((country) =>
     country.cities.find((city) => city.id === cityName)
   );
@@ -27,6 +32,18 @@ export default function DetailsOfTrip() {
   if (!city) {
     return <h2>City not found</h2>;
   }
+  const handleDeleteClick = () => {
+    deleteCity(city.id);
+    router.push("/");
+  };
+  const handleConfirmDeleteClick = () => {
+    setShowConfirmPopup(false);
+    handleDeleteClick();
+  };
+
+  const handleCancelDeleteClick = () => {
+    setShowConfirmPopup(false);
+  };
 
   const totalHotelPrice = city.hotels.map((hotel) => hotel.hotelPrice);
   const totalPriceOfHotels = totalHotelPrice.reduce(
@@ -52,6 +69,16 @@ export default function DetailsOfTrip() {
     <>
       <Header title="Details of traveling" />
       <StyledLink href="/"> Home</StyledLink>
+      <StyledButtonDelete onClick={() => setShowConfirmPopup(true)}>
+        Delete
+      </StyledButtonDelete>
+      {showConfirmPopup && (
+        <StyledPopup>
+          <p>Are you sure you want to delete this city?</p>
+          <button onClick={handleConfirmDeleteClick}>YES</button>
+          <button onClick={handleCancelDeleteClick}>NO</button>
+        </StyledPopup>
+      )}
       <StyledSection>
         <StyledCountry>{country.country}</StyledCountry>
         <StyledH4>

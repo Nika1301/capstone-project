@@ -2,13 +2,13 @@ import {
   StyledInput,
   StyledLabel,
   StyledInputSmall,
-  StyledDiv
+  StyledDiv,
 } from "../CityCreateForm/StyledCityCreate";
 import { useState } from "react";
 
 export default function CreateFood({ food, handleFoodChange }) {
   const [foodName, setFoodName] = useState("");
-  const [foodPrice, setFoodPrice] = useState(0);
+  const [foodPrice, setFoodPrice] = useState(food.foodPrice || 0);
   function handleChange(event) {
     setFoodName(event.target.value);
     handleFoodChange({
@@ -27,6 +27,7 @@ export default function CreateFood({ food, handleFoodChange }) {
           type="text"
           placeholder="...add food"
           onChange={handleChange}
+          defaultValue={food.foodName}
         />
       </div>
       <div>
@@ -44,6 +45,7 @@ export default function CreateFood({ food, handleFoodChange }) {
               foodPrice: parseInt(event.target.value),
             });
           }}
+          defaultValue={food.foodPrice}
         />
       </div>
     </StyledDiv>
