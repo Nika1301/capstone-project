@@ -20,6 +20,7 @@ import {
 import CreateHotel from "../Hotel";
 import CreatePlace from "../Place";
 import CreateFood from "../Food";
+import Footer from "../Footer/Footer";
 
 export default function Form() {
   const router = useRouter();
@@ -149,7 +150,6 @@ export default function Form() {
           <StyledButton type="button" onClick={handlePlaceClick}>
             Add
           </StyledButton>
-  
         </StyledSection>
 
         <StyledSection>
@@ -178,6 +178,7 @@ export default function Form() {
 
         <StyledButton type="submit">Create</StyledButton>
       </StyledFormContainer>
+      <Footer />
     </>
   );
 }

@@ -2,24 +2,23 @@ import Image from "next/image";
 import styled from "styled-components";
 
 const StyledHeader = styled.header`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #2ec4b6;
   position: fixed;
   top: 0;
-  padding-right: 40%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: #2ec4b6;
   @media screen and (max-width: 768px) {
-    padding-right: 15%;
     gap: 15%;
   }
 `;
 
 const StyledImage = styled(Image)`
+  position: fixed;
+  top: 15px;
+  left: 10px;
   border-radius: 25px;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
   animation: spin 4s linear infinite;
   @keyframes spin {
     from {
@@ -31,22 +30,17 @@ const StyledImage = styled(Image)`
   }
 `;
 const StyledTitle = styled.h1`
-  text-align: center;
   color: #063539;
-  font-size: 1.2em;
-  margin: auto;
-  @media screen and (max-width: 768px) {
-    font-size: 1em;
-  }
+  font-size: 1.5rem;
 `;
 
 export default function Header({ title }) {
   return (
     <>
       <StyledHeader>
-        <StyledImage src="/logo.png" alt="My Logo" width={50} height={50} />
         <StyledTitle>{title}</StyledTitle>
       </StyledHeader>
+      <StyledImage src="/logo.png" alt="My Logo" width={50} height={50} />
     </>
   );
 }

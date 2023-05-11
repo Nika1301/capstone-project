@@ -2,10 +2,11 @@ import styled from "styled-components";
 import Link from "next/link";
 import Header from "@/src/components/Header/Header";
 import Country from "@/src/components/Country/Country";
-
+import Footer from "@/src/components/Footer/Footer";
 const StyledSection = styled.section`
   margin-top: 7rem;
   background-color: #cbf3f0;
+  margin-bottom: 5rem;
 `;
 const StyledList = styled.li`
   list-style: none;
@@ -25,23 +26,20 @@ const StyledLinkCity = styled(Link)`
 `;
 const StyledLink = styled(Link)`
   position: fixed;
-  color: yellow;
+  color: #cbf3f0;
   background-color: #0d5c63;
   font-weight: bold;
-  border: solid;
-  border-color: yellow;
-  border-radius: 50%;
+  border-radius: 999px;
   font-size: 0.8em;
-  padding: 0.8rem;
-  bottom: 0.2rem;
-  margin: 1rem;
-  right: 0.5rem;
+  padding: 1rem 0.6rem;
+  bottom: 58px;
+  right: 10px;
   text-decoration: none;
   text-align: center;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.4);
   &:hover {
-    color: #0d5c63;
-    background-color: yellow;
-    border-color: #0d5c63;
+    color: #063539;
+    background-color: #2ec4b6;
   }
   &:active {
     transform: scale(0.95);
@@ -84,12 +82,12 @@ export default function Countries() {
           })}
         </ul>
       </StyledSection>
-
       <StyledLink href="/CreateCity">
         Create
         <br />
         City
       </StyledLink>
+      <Footer />
     </>
   );
 }
