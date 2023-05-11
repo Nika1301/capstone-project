@@ -49,7 +49,6 @@ export default function Form() {
     setHotels([...hotels, { id: uuidv4(), hotel: "", hotelPrice: "" }]);
   }
   function handleHotelChange(newHotel) {
-    console.log(newHotel);
     setHotels(
       hotels.map((hotel) => {
         if (hotel.id === newHotel.id) {

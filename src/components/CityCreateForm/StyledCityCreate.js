@@ -55,8 +55,7 @@ export const StyledLabel = styled.label`
 
 export const StyledDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-flow: column wrap;
   gap: 0.5rem;
   padding: 0.5rem;
 `;
