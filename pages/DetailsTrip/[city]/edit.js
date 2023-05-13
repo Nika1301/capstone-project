@@ -29,6 +29,7 @@ export default function EditCity() {
     updateCity,
     removeHotel,
     removePlace,
+    removeFood,
   } = useAppStore();
 
   const city = useAppStore((state) => {
@@ -72,7 +73,7 @@ export default function EditCity() {
     updateFood(cityId, newFood);
   }
   function handleDeleteFood(foodId) {
-    updateFood(cityId, (food) => food.filter((meal) => meal.id !== foodId));
+    removeFood(cityId, foodId);
   }
 
   return (

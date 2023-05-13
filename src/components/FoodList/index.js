@@ -25,7 +25,16 @@ export default function FoodList({ city, handleFoodChange, handleDeleteFood }) {
   function handleFoodClick() {
     setFood([...foods, getNewFood()]);
   }
-
+  function handleDeleteClick(foodId) {
+    if (foods.length === 1) {
+      const emptyFood = getNewFood();
+      setFood([emptyFood]);
+      handleDeleteFood(foodId);
+      return;
+    }
+    setFood((prevFood) => prevFood.filter((meal) => meal.id !== foodId));
+    handleDeleteFood(foodId);
+  }
   return (
     <StyledSection>
       <div>
@@ -35,7 +44,7 @@ export default function FoodList({ city, handleFoodChange, handleDeleteFood }) {
               key={food.id}
               food={food}
               handleFoodChange={handleFoodChange}
-              handleDeleteFood={handleDeleteFood}
+              handleDeleteFood={handleDeleteClick}
             />
           );
         })}
