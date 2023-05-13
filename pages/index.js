@@ -33,7 +33,7 @@ const StyledLink = styled(Link)`
   font-size: 0.8em;
   padding: 1rem 0.6rem;
   bottom: 58px;
-  right: 10px;
+  right: 15px;
   text-decoration: none;
   text-align: center;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.4);
@@ -85,7 +85,7 @@ export default function Countries() {
       <StyledLink href="/CreateCity">
         Create
         <br />
-        City
+        Trip
       </StyledLink>
       <Footer />
     </>

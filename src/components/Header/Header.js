@@ -17,7 +17,7 @@ const StyledHeader = styled.header`
 const StyledImage = styled(Image)`
   position: fixed;
   top: 15px;
-  left: 10px;
+  left: 16px;
   border-radius: 25px;
   animation: spin 4s linear infinite;
   @keyframes spin {

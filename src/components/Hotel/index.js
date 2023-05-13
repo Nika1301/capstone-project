@@ -4,13 +4,23 @@ import {
   StyledInputSmall,
   StyledDiv,
   StyledTotalPrice,
+  StyledButtonWithDelete,
 } from "../CityCreateForm/StyledCityCreate";
-import { useState } from "react";
 
-export default function CreateHotel({ hotel, handleHotelChange }) {
+import { useState, useEffect } from "react";
+
+export default function CreateHotel({
+  hotel,
+  handleHotelChange,
+  handleDeleteHotel,
+}) {
   const [hotelName, setHotelName] = useState("");
   const [dayshotel, setDayshotel] = useState(hotel.hotelDay || 0);
   const [dayprice, setDayprice] = useState(hotel.dayPrice || 0);
+
+  useEffect(() => {
+    setHotelName(hotel.hotel || "");
+  }, [hotel]);
 
   function handleChange(event) {
     setHotelName(event.target.value);
@@ -21,6 +31,12 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
       dayPrice: dayprice,
       hotelPrice: dayshotel * dayprice,
     });
+  }
+  function handleDelete() {
+    handleDeleteHotel(hotel.id);
+  }
+  function canDeleteHotel() {
+    return hotelName !== "";
   }
 
   return (
@@ -33,7 +49,7 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           type="text"
           placeholder="...add hotel name"
           onChange={handleChange}
-          defaultValue={hotel.hotel}
+          value={hotelName}
         />
       </div>
       <div>
@@ -74,7 +90,13 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           defaultValue={hotel.dayPrice}
         />
       </div>
-      <StyledTotalPrice>{dayprice * dayshotel}</StyledTotalPrice>
+      <StyledTotalPrice>{dayprice * dayshotel} Euro</StyledTotalPrice>
+      <StyledButtonWithDelete
+        onClick={handleDelete}
+        disabled={!canDeleteHotel()}
+      >
+        Delete
+      </StyledButtonWithDelete>
     </StyledDiv>
   );
 }

@@ -3,19 +3,35 @@ import {
   StyledLabel,
   StyledInputSmall,
   StyledDiv,
+  StyledButtonWithDelete,
 } from "../CityCreateForm/StyledCityCreate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function CreateFood({ food, handleFoodChange }) {
+export default function CreateFood({
+  food,
+  handleFoodChange,
+  handleDeleteFood,
+}) {
   const [foodName, setFoodName] = useState("");
   const [foodPrice, setFoodPrice] = useState(food.foodPrice || 0);
+
+  useEffect(() => {
+    setFoodName(food.foodName || "");
+  }, [food]);
+
   function handleChange(event) {
     setFoodName(event.target.value);
     handleFoodChange({
       id: food.id,
-      foodName: foodName,
+      foodName: event.target.value,
       foodPrice: foodPrice,
     });
+  }
+  function handleDelete() {
+    handleDeleteFood(food.id);
+  }
+  function canDeleteFood() {
+    return foodName !== "";
   }
   return (
     <StyledDiv>
@@ -48,6 +64,12 @@ export default function CreateFood({ food, handleFoodChange }) {
           defaultValue={food.foodPrice}
         />
       </div>
+      <StyledButtonWithDelete
+        onClick={handleDelete}
+        disabled={!canDeleteFood()}
+      >
+        Delete
+      </StyledButtonWithDelete>
     </StyledDiv>
   );
 }
