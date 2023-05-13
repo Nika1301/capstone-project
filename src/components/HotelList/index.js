@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CreateHotel from "@/src/components/Hotel";
 import { v4 as uuidv4 } from "uuid";
-
 import {
   StyledButtonWithDesable,
   StyledSection,
