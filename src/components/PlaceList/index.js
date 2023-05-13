@@ -26,8 +26,21 @@ export default function PlaceList({
     const isAnyHotelFieldEmpty = places.some((place) => place.place === "");
     setIsAddPlaceDisabled(isAnyHotelFieldEmpty);
   }, [places]);
+
   function handlePlaceClick() {
     setPlaces([...places, getNewPlace()]);
+  }
+  function handleDeleteClick(placeId) {
+    if (places.lenght === 1) {
+      const emptyPlace = getNewPlace();
+      setPlaces([emptyPlace]);
+      handleDeletePlace(placeId);
+      return;
+    }
+    setPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== placeId)
+    );
+    handleDeletePlace(placeId);
   }
 
   return (
@@ -39,7 +52,7 @@ export default function PlaceList({
               key={place.id}
               place={place}
               handlePlaceChange={handlePlaceChange}
-              handleDeletePlace={handleDeletePlace}
+              handleDeletePlace={handleDeleteClick}
             />
           );
         })}

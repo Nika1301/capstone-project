@@ -22,7 +22,14 @@ import Footer from "@/src/components/Footer/Footer";
 export default function EditCity() {
   const router = useRouter();
   const cityId = router.query.city;
-  const { updateHotels, updatePlaces, updateFood, updateCity, removeHotel } = useAppStore();
+  const {
+    updateHotels,
+    updatePlaces,
+    updateFood,
+    updateCity,
+    removeHotel,
+    removePlace,
+  } = useAppStore();
 
   const city = useAppStore((state) => {
     const countries = state.countries;
@@ -59,9 +66,7 @@ export default function EditCity() {
     updatePlaces(cityId, newPlace);
   }
   function handleDeletePlace(placeId) {
-    updatePlaces(cityId, (places) =>
-      places.filter((place) => place.id !== placeId)
-    );
+    removePlace(cityId, placeId);
   }
   function handleFoodChange(newFood) {
     updateFood(cityId, newFood);
