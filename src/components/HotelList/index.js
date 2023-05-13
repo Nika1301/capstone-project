@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import CreateHotel from "@/src/components/Hotel";
 import { v4 as uuidv4 } from "uuid";
 
-import { StyledButtonWithDesable, StyledSection } from "../CityCreateForm/StyledCityCreate";
-
+import {
+  StyledButtonWithDesable,
+  StyledSection,
+} from "../CityCreateForm/StyledCityCreate";
 
 function getNewHotel() {
   return { id: uuidv4(), hotel: "", hotelPrice: "" };
@@ -28,7 +30,18 @@ export default function HotelList({
   function handleHotelClick() {
     setHotels([...hotels, getNewHotel()]);
   }
-
+  function handleDeleteClick(hotelId) {
+    if (hotels.length === 1) {
+      const emptyHotel = getNewHotel();
+      setHotels([emptyHotel]);
+      handleDeleteHotel(hotelId);
+      return;
+    }
+    setHotels((prevHotels) =>
+      prevHotels.filter((hotel) => hotel.id !== hotelId)
+    );
+    handleDeleteHotel(hotelId);
+  }
   return (
     <StyledSection>
       <div>
@@ -38,7 +51,7 @@ export default function HotelList({
               key={hotel.id}
               hotel={hotel}
               handleHotelChange={handleHotelChange}
-              handleDeleteHotel={handleDeleteHotel}
+              handleDeleteHotel={handleDeleteClick}
             />
           );
         })}
