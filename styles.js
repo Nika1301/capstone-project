@@ -5,10 +5,10 @@ export default createGlobalStyle`
   *::after {
     box-sizing: border-box;
   }
-
   body {
     margin: 0;
     font-family: system-ui;
     background-color: #cbf3f0;
   }
+
 `;

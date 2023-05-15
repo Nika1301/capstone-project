@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CreateHotel from "@/src/components/Hotel";
 import { v4 as uuidv4 } from "uuid";
 import {
-  StyledButtonWithDesable,
+  StyledButtonWithDisable,
   StyledSection,
 } from "../CityCreateForm/StyledCityCreate";
 
@@ -56,13 +56,13 @@ export default function HotelList({
         })}
       </div>
       <div>
-        <StyledButtonWithDesable
+        <StyledButtonWithDisable
           type="button"
           onClick={handleHotelClick}
           disabled={isAddHotelDisabled}
         >
           Add
-        </StyledButtonWithDesable>
+        </StyledButtonWithDisable>
       </div>
     </StyledSection>
   );

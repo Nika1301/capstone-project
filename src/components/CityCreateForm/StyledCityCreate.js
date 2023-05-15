@@ -16,35 +16,7 @@ export const StyledButton = styled.button`
   }
 `;
 
-export const StyledButtonWithDelete = styled.button`
-  background-color: #0d5c63;
-  border-radius: 0.6rem;
-  color: #cbf3f0;
-  font-weight: bold;
-  padding: 0.25rem 0.25rem;
-  &:hover {
-    color: #063539;
-    background-color: #2ec4b6;
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      background-color: #ccc;
-      color: #999;
-      cursor: not-allowed;
-      &:hover {
-        color: #999;
-        background-color: #ccc;
-      }
-      &:active {
-        transform: none;
-      }
-    `}
-`;
-export const StyledButtonWithDesable = styled.button`
+export const StyledButtonWithDisable = styled.button`
   background-color: #0d5c63;
   border-radius: 0.6rem;
   color: #cbf3f0;

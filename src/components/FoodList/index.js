@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CreateFood from "@/src/components/Food";
 import { v4 as uuidv4 } from "uuid";
 import {
-  StyledButtonWithDesable,
+  StyledButtonWithDisable,
   StyledSection,
 } from "../CityCreateForm/StyledCityCreate";
 
@@ -50,13 +50,13 @@ export default function FoodList({ city, handleFoodChange, handleDeleteFood }) {
         })}
       </div>
       <div>
-        <StyledButtonWithDesable
+        <StyledButtonWithDisable
           type="button"
           onClick={handleFoodClick}
           disabled={isAddFoodDisabled}
         >
           Add
-        </StyledButtonWithDesable>
+        </StyledButtonWithDisable>
       </div>
     </StyledSection>
   );

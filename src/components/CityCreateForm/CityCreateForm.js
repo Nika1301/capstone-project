@@ -16,7 +16,7 @@ import {
   StyledSelect,
   StyledSection,
   StyledDivSection,
-  StyledButtonWithDesable,
+  StyledButtonWithDisable,
 } from "./StyledCityCreate";
 import CreateHotel from "../Hotel";
 import CreatePlace from "../Place";
@@ -147,7 +147,7 @@ export default function Form() {
 
   return (
     <>
-      <Header title="Create Your Travel" />
+      <Header title="Create Your Trip" />
       <StyledLink href="/">Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>
@@ -191,13 +191,13 @@ export default function Form() {
             ))}
           </StyledDivSection>
 
-          <StyledButtonWithDesable
+          <StyledButtonWithDisable
             type="button"
             onClick={handleHotelClick}
             disabled={isAddHotelDisabled}
           >
             Add
-          </StyledButtonWithDesable>
+          </StyledButtonWithDisable>
         </StyledSection>
 
         <StyledSection>
@@ -211,13 +211,13 @@ export default function Form() {
               />
             ))}
           </StyledDivSection>
-          <StyledButtonWithDesable
+          <StyledButtonWithDisable
             type="button"
             onClick={handlePlaceClick}
             disabled={isAddPlaceDisabled}
           >
             Add
-          </StyledButtonWithDesable>
+          </StyledButtonWithDisable>
         </StyledSection>
 
         <StyledSection>
@@ -232,13 +232,13 @@ export default function Form() {
             ))}
           </StyledDivSection>
 
-          <StyledButtonWithDesable
+          <StyledButtonWithDisable
             type="button"
             onClick={handleFoodClick}
             disabled={isAddFoodDisabled}
           >
             Add
-          </StyledButtonWithDesable>
+          </StyledButtonWithDisable>
         </StyledSection>
         <StyledLabel htmlFor="notes">Notes:</StyledLabel>
         <StyledTextarea

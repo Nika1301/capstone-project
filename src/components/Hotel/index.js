@@ -4,7 +4,7 @@ import {
   StyledInputSmall,
   StyledDiv,
   StyledTotalPrice,
-  StyledButtonWithDelete,
+  StyledButtonWithDisable,
 } from "../CityCreateForm/StyledCityCreate";
 
 import { useState, useEffect } from "react";
@@ -15,8 +15,8 @@ export default function CreateHotel({
   handleDeleteHotel,
 }) {
   const [hotelName, setHotelName] = useState("");
-  const [dayshotel, setDayshotel] = useState(hotel.hotelDay || 0);
-  const [dayprice, setDayprice] = useState(hotel.dayPrice || 0);
+  const [daysHotel, setDaysHotel] = useState(hotel.hotelDay || 0);
+  const [dayPrice, setDayPrice] = useState(hotel.dayPrice || 0);
 
   useEffect(() => {
     setHotelName(hotel.hotel || "");
@@ -27,9 +27,9 @@ export default function CreateHotel({
     handleHotelChange({
       id: hotel.id,
       hotel: event.target.value,
-      hotelDay: dayshotel,
-      dayPrice: dayprice,
-      hotelPrice: dayshotel * dayprice,
+      daysHotel,
+      dayPrice,
+      hotelPrice: daysHotel * dayPrice,
     });
   }
   function handleDelete() {
@@ -59,13 +59,13 @@ export default function CreateHotel({
           type="number"
           min={0}
           onChange={(event) => {
-            setDayshotel(parseInt(event.target.value));
+            setDaysHotel(parseInt(event.target.value));
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
-              hotelDay: dayshotel,
-              dayPrice: dayprice,
-              hotelPrice: parseInt(event.target.value) * dayprice,
+              hotelDay: daysHotel,
+              dayPrice: dayPrice,
+              hotelPrice: parseInt(event.target.value) * dayPrice,
             });
           }}
           defaultValue={hotel.hotelDay}
@@ -78,25 +78,25 @@ export default function CreateHotel({
           type="number"
           min={0}
           onChange={(event) => {
-            setDayprice(parseInt(event.target.value));
+            setDayPrice(parseInt(event.target.value));
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
-              hotelDay: dayshotel,
-              dayPrice: dayprice,
-              hotelPrice: parseInt(event.target.value) * dayshotel,
+              hotelDay: daysHotel,
+              dayPrice: dayPrice,
+              hotelPrice: parseInt(event.target.value) * daysHotel,
             });
           }}
           defaultValue={hotel.dayPrice}
         />
       </div>
-      <StyledTotalPrice>{dayprice * dayshotel} Euro</StyledTotalPrice>
-      <StyledButtonWithDelete
+      <StyledTotalPrice>{dayPrice * daysHotel} Euro</StyledTotalPrice>
+      <StyledButtonWithDisable
         onClick={handleDelete}
         disabled={!canDeleteHotel()}
       >
         Delete
-      </StyledButtonWithDelete>
+      </StyledButtonWithDisable>
     </StyledDiv>
   );
 }

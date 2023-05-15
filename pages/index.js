@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/src/components/Header/Header";
 import Country from "@/src/components/Country/Country";
 import Footer from "@/src/components/Footer/Footer";
+import { useAppStore } from "@/lib/store";
 const StyledSection = styled.section`
   margin-top: 7rem;
   background-color: #cbf3f0;
@@ -45,13 +46,12 @@ const StyledLink = styled(Link)`
     transform: scale(0.95);
   }
 `;
-import { useAppStore } from "@/lib/store";
 
 export default function Countries() {
   const { countries } = useAppStore();
   return (
     <>
-      <Header title="All Countries" />
+      <Header title="Trip Journal" />
       <StyledSection className="country">
         <ul>
           {countries.map((country) => {

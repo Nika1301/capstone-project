@@ -3,8 +3,6 @@ import Link from "next/link";
 
 export const StyledSpan = styled.span`
   font-family: "Lobster", cursive, bold;
-  /* display: inline;
-  margin-left: 20px; */
   display: block;
   margin-top: 5px;
 `;

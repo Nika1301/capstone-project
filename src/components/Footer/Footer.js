@@ -11,9 +11,5 @@ const StyledFooter = styled.footer`
 `;
 
 export default function Footer() {
-  return (
-    <>
-      <StyledFooter>@2023</StyledFooter>
-    </>
-  );
+  return <StyledFooter>@{new Date().getFullYear()}</StyledFooter>;
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePlace from "@/src/components/Place";
 import { v4 as uuidv4 } from "uuid";
 import {
-  StyledButtonWithDesable,
+  StyledButtonWithDisable,
   StyledSection,
 } from "../CityCreateForm/StyledCityCreate";
 
@@ -31,7 +31,7 @@ export default function PlaceList({
     setPlaces([...places, getNewPlace()]);
   }
   function handleDeleteClick(placeId) {
-    if (places.lenght === 1) {
+    if (places.length === 1) {
       const emptyPlace = getNewPlace();
       setPlaces([emptyPlace]);
       handleDeletePlace(placeId);
@@ -58,13 +58,13 @@ export default function PlaceList({
         })}
       </div>
       <div>
-        <StyledButtonWithDesable
+        <StyledButtonWithDisable
           type="button"
           onClick={handlePlaceClick}
           disabled={isAddPlaceDisabled}
         >
           Add
-        </StyledButtonWithDesable>
+        </StyledButtonWithDisable>
       </div>
     </StyledSection>
   );

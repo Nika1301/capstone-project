@@ -3,7 +3,7 @@ import {
   StyledLabel,
   StyledInputSmall,
   StyledDiv,
-  StyledButtonWithDelete,
+  StyledButtonWithDisable,
 } from "../CityCreateForm/StyledCityCreate";
 import { useState, useEffect } from "react";
 
@@ -24,7 +24,7 @@ export default function CreateFood({
     handleFoodChange({
       id: food.id,
       foodName: event.target.value,
-      foodPrice: foodPrice,
+      foodPrice,
     });
   }
   function handleDelete() {
@@ -64,12 +64,12 @@ export default function CreateFood({
           defaultValue={food.foodPrice}
         />
       </div>
-      <StyledButtonWithDelete
+      <StyledButtonWithDisable
         onClick={handleDelete}
         disabled={!canDeleteFood()}
       >
         Delete
-      </StyledButtonWithDelete>
+      </StyledButtonWithDisable>
     </StyledDiv>
   );
 }

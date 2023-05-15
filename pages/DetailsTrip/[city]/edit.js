@@ -78,7 +78,7 @@ export default function EditCity() {
 
   return (
     <>
-      <Header title="Edit Your Travel" />
+      <Header title="Edit Your Trip" />
       <StyledLink href={`/DetailsTrip/${city.id}`}>Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>

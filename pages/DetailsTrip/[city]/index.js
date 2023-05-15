@@ -68,7 +68,7 @@ export default function DetailsOfTrip() {
 
   return (
     <>
-      <Header title="Details of traveling" />
+      <Header title="Trip Details" />
       <StyledLink href="/"> Home</StyledLink>
       <StyledEditLink href={`/DetailsTrip/${city.id}/edit`}>
         Edit
@@ -96,14 +96,17 @@ export default function DetailsOfTrip() {
         <StyledH4>Hotels:</StyledH4>
         <StyledBlox>
           <StyledUl>
-            {city.hotels.map((hotel) => (
-              <StyledList key={uuidv4()}>
-                <StyledSpan>{hotel.hotel}</StyledSpan>
-                {hotel.hotelPrice ? (
-                  <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
-                ) : null}
-              </StyledList>
-            ))}
+            {city.hotels.map(
+              (hotel) =>
+                hotel.hotel !== "" && (
+                  <StyledList key={hotel.id}>
+                    <StyledSpan>{hotel.hotel}</StyledSpan>
+                    {hotel.hotelPrice ? (
+                      <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
+                    ) : null}
+                  </StyledList>
+                )
+            )}
 
             <StyledDiv>
               <StyledTotalPrice>Total Price:</StyledTotalPrice>
@@ -114,14 +117,17 @@ export default function DetailsOfTrip() {
         <StyledH4>Places to visit:</StyledH4>
         <StyledBlox>
           <StyledUl>
-            {city.places.map((place) => (
-              <StyledList key={uuidv4()}>
-                <StyledSpan>{place.place}</StyledSpan>
-                {place.placePrice ? (
-                  <StyledSpan> {place.placePrice} Euro </StyledSpan>
-                ) : null}
-              </StyledList>
-            ))}
+            {city.places.map(
+              (place) =>
+                place.place !== "" && (
+                  <StyledList key={place.id}>
+                    <StyledSpan>{place.place}</StyledSpan>
+                    {place.placePrice ? (
+                      <StyledSpan> {place.placePrice} Euro </StyledSpan>
+                    ) : null}
+                  </StyledList>
+                )
+            )}
           </StyledUl>
           <StyledDiv>
             <StyledTotalPrice>Total Price:</StyledTotalPrice>
@@ -131,14 +137,17 @@ export default function DetailsOfTrip() {
         <StyledH4>Food to try:</StyledH4>
         <StyledBlox>
           <StyledUl>
-            {city.food.map((food) => (
-              <StyledList key={uuidv4()}>
-                <StyledSpan>{food.foodName}</StyledSpan>
-                {food.foodPrice ? (
-                  <StyledSpan>{food.foodPrice} Euro</StyledSpan>
-                ) : null}
-              </StyledList>
-            ))}
+            {city.food.map(
+              (food) =>
+                food.food !== "" && (
+                  <StyledList key={food.id}>
+                    <StyledSpan>{food.foodName}</StyledSpan>
+                    {food.foodPrice ? (
+                      <StyledSpan>{food.foodPrice} Euro</StyledSpan>
+                    ) : null}
+                  </StyledList>
+                )
+            )}
           </StyledUl>
           <StyledDiv>
             <StyledTotalPrice>Total Price:</StyledTotalPrice>
