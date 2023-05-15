@@ -4,23 +4,39 @@ import {
   StyledInputSmall,
   StyledDiv,
   StyledTotalPrice,
+  StyledButtonWithDisable,
 } from "../CityCreateForm/StyledCityCreate";
-import { useState } from "react";
 
-export default function CreateHotel({ hotel, handleHotelChange }) {
+import { useState, useEffect } from "react";
+
+export default function CreateHotel({
+  hotel,
+  handleHotelChange,
+  handleDeleteHotel,
+}) {
   const [hotelName, setHotelName] = useState("");
-  const [dayshotel, setDayshotel] = useState(hotel.hotelDay || 0);
-  const [dayprice, setDayprice] = useState(hotel.dayPrice || 0);
+  const [daysHotel, setDaysHotel] = useState(hotel.hotelDay || 0);
+  const [dayPrice, setDayPrice] = useState(hotel.dayPrice || 0);
+
+  useEffect(() => {
+    setHotelName(hotel.hotel || "");
+  }, [hotel]);
 
   function handleChange(event) {
     setHotelName(event.target.value);
     handleHotelChange({
       id: hotel.id,
       hotel: event.target.value,
-      hotelDay: dayshotel,
-      dayPrice: dayprice,
-      hotelPrice: dayshotel * dayprice,
+      daysHotel,
+      dayPrice,
+      hotelPrice: daysHotel * dayPrice,
     });
+  }
+  function handleDelete() {
+    handleDeleteHotel(hotel.id);
+  }
+  function canDeleteHotel() {
+    return hotelName !== "";
   }
 
   return (
@@ -33,7 +49,7 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           type="text"
           placeholder="...add hotel name"
           onChange={handleChange}
-          defaultValue={hotel.hotel}
+          value={hotelName}
         />
       </div>
       <div>
@@ -43,13 +59,13 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           type="number"
           min={0}
           onChange={(event) => {
-            setDayshotel(parseInt(event.target.value));
+            setDaysHotel(parseInt(event.target.value));
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
-              hotelDay: dayshotel,
-              dayPrice: dayprice,
-              hotelPrice: parseInt(event.target.value) * dayprice,
+              hotelDay: daysHotel,
+              dayPrice: dayPrice,
+              hotelPrice: parseInt(event.target.value) * dayPrice,
             });
           }}
           defaultValue={hotel.hotelDay}
@@ -62,19 +78,25 @@ export default function CreateHotel({ hotel, handleHotelChange }) {
           type="number"
           min={0}
           onChange={(event) => {
-            setDayprice(parseInt(event.target.value));
+            setDayPrice(parseInt(event.target.value));
             handleHotelChange({
               id: hotel.id,
               hotel: hotelName,
-              hotelDay: dayshotel,
-              dayPrice: dayprice,
-              hotelPrice: parseInt(event.target.value) * dayshotel,
+              hotelDay: daysHotel,
+              dayPrice: dayPrice,
+              hotelPrice: parseInt(event.target.value) * daysHotel,
             });
           }}
           defaultValue={hotel.dayPrice}
         />
       </div>
-      <StyledTotalPrice>{dayprice * dayshotel}</StyledTotalPrice>
+      <StyledTotalPrice>{dayPrice * daysHotel} Euro</StyledTotalPrice>
+      <StyledButtonWithDisable
+        onClick={handleDelete}
+        disabled={!canDeleteHotel()}
+      >
+        Delete
+      </StyledButtonWithDisable>
     </StyledDiv>
   );
 }

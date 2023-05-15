@@ -14,6 +14,7 @@ import {
   StyledButtonDelete,
   StyledPopup,
   StyledEditLink,
+  StyledBlox,
 } from "../../../src/components/StyledTripDetails";
 import Header from "@/src/components/Header/Header";
 import { useAppStore } from "@/lib/store";
@@ -93,60 +94,69 @@ export default function DetailsOfTrip() {
           ) : null}
         </StyledH4>
         <StyledH4>Hotels:</StyledH4>
-        <StyledUl>
-          {city.hotels.map((hotel) => (
-            <StyledList key={uuidv4()}>
-              <StyledSpan>{hotel.hotel}</StyledSpan>
-              {hotel.hotelPrice ? (
-                <StyledSpan>{hotel.hotelPrice} Euro</StyledSpan>
-              ) : null}
-            </StyledList>
-          ))}
-
+        <StyledBlox>
+          <StyledUl>
+            {city.hotels
+              .filter((hotel) => !!hotel.hotel)
+              .map(({ id, hotel, hotelPrice }) => (
+                <StyledList key={id}>
+                  <StyledSpan>{hotel}</StyledSpan>
+                  {hotelPrice ? (
+                    <StyledSpan>{hotelPrice} Euro</StyledSpan>
+                  ) : null}
+                </StyledList>
+              ))}
+            <StyledDiv>
+              <StyledTotalPrice>Total Price:</StyledTotalPrice>
+              <StyledTotalPrice>{totalPriceOfHotels} Euro</StyledTotalPrice>
+            </StyledDiv>
+          </StyledUl>
+        </StyledBlox>
+        <StyledH4>Places to visit:</StyledH4>
+        <StyledBlox>
+          <StyledUl>
+            {city.places
+              .filter((place) => !!place.place)
+              .map(({ id, place, placePrice }) => (
+                <StyledList key={id}>
+                  <StyledSpan>{place}</StyledSpan>
+                  {placePrice ? (
+                    <StyledSpan>{placePrice}Euro </StyledSpan>
+                  ) : null}
+                </StyledList>
+              ))}
+          </StyledUl>
           <StyledDiv>
             <StyledTotalPrice>Total Price:</StyledTotalPrice>
-            <StyledTotalPrice>{totalPriceOfHotels} Euro</StyledTotalPrice>
+            <StyledTotalPrice>{totalPriceOfPlaces} Euro</StyledTotalPrice>
           </StyledDiv>
-        </StyledUl>
-
-        <StyledH4>Places to visit:</StyledH4>
-        <StyledUl>
-          {city.places.map((place) => (
-            <StyledList key={uuidv4()}>
-              <StyledSpan>{place.place}</StyledSpan>
-              {place.placePrice ? (
-                <StyledSpan> {place.placePrice} Euro </StyledSpan>
-              ) : null}
-            </StyledList>
-          ))}
-        </StyledUl>
-        <StyledDiv>
-          <StyledTotalPrice>Total Price:</StyledTotalPrice>
-          <StyledTotalPrice>{totalPriceOfPlaces} Euro</StyledTotalPrice>
-        </StyledDiv>
-
+        </StyledBlox>
         <StyledH4>Food to try:</StyledH4>
-        <StyledUl>
-          {city.food.map((food) => (
-            <StyledList key={uuidv4()}>
-              <StyledSpan>{food.foodName}</StyledSpan>
-              {food.foodPrice ? (
-                <StyledSpan>{food.foodPrice} Euro</StyledSpan>
-              ) : null}
-            </StyledList>
-          ))}
-        </StyledUl>
-        <StyledDiv>
-          <StyledTotalPrice>Total Price:</StyledTotalPrice>
-          <StyledTotalPrice> {totalPriceOfFoods} Euro</StyledTotalPrice>
-        </StyledDiv>
+        <StyledBlox>
+          <StyledUl>
+            {city.food
+              .filter((meal) => !!meal.place)
+              .map(({ id, foodName, foodPrice }) => (
+                <StyledList key={id}>
+                  <StyledSpan>{foodName}</StyledSpan>
+                  {foodPrice ? <StyledSpan>{foodPrice} Euro</StyledSpan> : null}
+                </StyledList>
+              ))}
+          </StyledUl>
+          <StyledDiv>
+            <StyledTotalPrice>Total Price:</StyledTotalPrice>
+            <StyledTotalPrice> {totalPriceOfFoods} Euro</StyledTotalPrice>
+          </StyledDiv>
+        </StyledBlox>
 
         <StyledDiv>
           <StyledTotalPrice>How much I spent on the trip:</StyledTotalPrice>{" "}
           <StyledTotalPrice>{totalPrice} Euro</StyledTotalPrice>
         </StyledDiv>
         <StyledH4>Notes:</StyledH4>
-        <p>{city.note}</p>
+        <StyledBlox>
+          <p>{city.note}</p>
+        </StyledBlox>
       </StyledSection>
       <Footer />
     </>

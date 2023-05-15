@@ -3,12 +3,13 @@ import Link from "next/link";
 
 export const StyledSpan = styled.span`
   font-family: "Lobster", cursive, bold;
-  display: inline;
-  margin-left: 20px;
+  display: block;
+  margin-top: 5px;
 `;
 export const StyledTotalPrice = styled.span`
   font-family: Arial, Helvetica, sans-serif;
   color: #0d5c63;
+  font-size: 1.2em;
 `;
 export const StyledUl = styled.ul`
   padding: 0;
@@ -16,7 +17,8 @@ export const StyledUl = styled.ul`
 `;
 export const StyledList = styled.li`
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem;
 `;
 export const StyledSection = styled.section`
@@ -24,7 +26,6 @@ export const StyledSection = styled.section`
   flex-direction: column;
   padding: 2rem 1.5rem 2rem 1.5rem;
   margin: auto;
-  max-width: 800px;
   margin: 6rem 1rem 3rem 1rem;
 `;
 
@@ -42,7 +43,7 @@ export const StyledCountry = styled.h2`
 `;
 
 export const StyledH4 = styled.h4`
-  font-size: 1em;
+  font-size: 1.2em;
   font-weight: bold;
 `;
 export const StyledLink = styled(Link)`
@@ -53,7 +54,7 @@ export const StyledLink = styled(Link)`
   border-radius: 10px;
   font-size: 0.8em;
   padding: 0.6rem 0.8rem 0.6rem 0.8rem;
-  top: 6rem;
+  top: 5.5rem;
   left: 1rem;
   text-decoration: none;
   text-align: center;
@@ -73,7 +74,7 @@ export const StyledEditLink = styled(Link)`
   border-radius: 10px;
   font-size: 0.8em;
   padding: 0.6rem 0.8rem 0.6rem 0.8rem;
-  top: 6rem;
+  top: 5.5rem;
   right: 1rem;
   text-decoration: none;
   text-align: center;
@@ -94,7 +95,7 @@ export const StyledButtonDelete = styled.button`
   border-radius: 10px;
   font-size: 0.8em;
   padding: 0.47rem;
-  top: 6rem;
+  top: 5.5rem;
   right: 5rem;
   text-decoration: none;
   text-align: center;
@@ -108,7 +109,7 @@ export const StyledButtonDelete = styled.button`
 `;
 
 export const StyledPopup = styled.div`
-  height: 400px;
+  height: 300px;
   width: 600px;
   background-color: #2ec4b6;
   text-align: center;
@@ -117,11 +118,12 @@ export const StyledPopup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   align-items: center;
+  padding: 2rem;
 
   p {
     font-size: 1.5em;
-    margin-top: 3rem;
-    padding: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
   }
 
   button {
@@ -136,7 +138,13 @@ export const StyledPopup = styled.div`
   }
 
   @media (max-width: 414px) {
-    height: 40%;
-    width: 80%;
+    height: 300px;
+    width: 350px;
   }
+`;
+export const StyledBlox = styled.section`
+  border: solid;
+  border-color: white;
+  padding: 1rem;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.4);
 `;

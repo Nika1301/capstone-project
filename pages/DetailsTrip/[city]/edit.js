@@ -22,7 +22,15 @@ import Footer from "@/src/components/Footer/Footer";
 export default function EditCity() {
   const router = useRouter();
   const cityId = router.query.city;
-  const { updateHotels, updatePlaces, updateFood } = useAppStore();
+  const {
+    updateHotels,
+    updatePlaces,
+    updateFood,
+    updateCity,
+    removeHotel,
+    removePlace,
+    removeFood,
+  } = useAppStore();
 
   const city = useAppStore((state) => {
     const countries = state.countries;
@@ -36,8 +44,6 @@ export default function EditCity() {
       .flat();
     return cities.find((city) => city.id === cityId);
   });
-
-  const { updateCity } = useAppStore();
 
   if (!city) {
     return null;
@@ -54,18 +60,25 @@ export default function EditCity() {
   function handleHotelChange(newHotel) {
     updateHotels(cityId, newHotel);
   }
-
+  function handleDeleteHotel(hotelId) {
+    removeHotel(cityId, hotelId);
+  }
   function handlePlaceChange(newPlace) {
     updatePlaces(cityId, newPlace);
   }
-
+  function handleDeletePlace(placeId) {
+    removePlace(cityId, placeId);
+  }
   function handleFoodChange(newFood) {
     updateFood(cityId, newFood);
+  }
+  function handleDeleteFood(foodId) {
+    removeFood(cityId, foodId);
   }
 
   return (
     <>
-      <Header title="Edit Your Travel" />
+      <Header title="Edit Your Trip" />
       <StyledLink href={`/DetailsTrip/${city.id}`}>Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>
@@ -105,19 +118,31 @@ export default function EditCity() {
         </StyledDiv>
         <StyledSection>
           <StyledDivSection>
-            <HotelList city={city} handleHotelChange={handleHotelChange} />
+            <HotelList
+              city={city}
+              handleHotelChange={handleHotelChange}
+              handleDeleteHotel={handleDeleteHotel}
+            ></HotelList>
           </StyledDivSection>
         </StyledSection>
 
         <StyledSection>
           <StyledDivSection>
-            <PlaceList city={city} handlePlaceChange={handlePlaceChange} />
+            <PlaceList
+              city={city}
+              handlePlaceChange={handlePlaceChange}
+              handleDeletePlace={handleDeletePlace}
+            />
           </StyledDivSection>
         </StyledSection>
 
         <StyledSection>
           <StyledDivSection>
-            <FoodList city={city} handleFoodChange={handleFoodChange} />
+            <FoodList
+              city={city}
+              handleFoodChange={handleFoodChange}
+              handleDeleteFood={handleDeleteFood}
+            />
           </StyledDivSection>
         </StyledSection>
         <StyledLabel htmlFor="notes">Notes:</StyledLabel>

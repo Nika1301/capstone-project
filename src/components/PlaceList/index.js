@@ -1,52 +1,71 @@
 import { useState, useEffect } from "react";
 import CreatePlace from "@/src/components/Place";
 import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
-
-const StyledButton = styled.button`
-  background-color: #0d5c63;
-  padding: 0.5rem;
-  border-radius: 0.6rem;
-  color: #cbf3f0;
-  font-weight: bold;
-  &:hover {
-    color: #063539;
-    background-color: #2ec4b6;
-  }
-  &:active {
-    transform: scale(0.95);
-  }
-`;
+import {
+  StyledButtonWithDisable,
+  StyledSection,
+} from "../CityCreateForm/StyledCityCreate";
 
 function getNewPlace() {
   return { id: uuidv4(), place: "", placePrice: "" };
 }
 
-export default function PlaceList({ city, handlePlaceChange }) {
+export default function PlaceList({
+  city,
+  handlePlaceChange,
+  handleDeletePlace,
+}) {
   const [places, setPlaces] = useState([getNewPlace()]);
+  const [isAddPlaceDisabled, setIsAddPlaceDisabled] = useState(false);
 
   useEffect(() => {
     setPlaces(city.places);
   }, [city.places]);
 
+  useEffect(() => {
+    const isAnyHotelFieldEmpty = places.some((place) => place.place === "");
+    setIsAddPlaceDisabled(isAnyHotelFieldEmpty);
+  }, [places]);
+
   function handlePlaceClick() {
     setPlaces([...places, getNewPlace()]);
   }
+  function handleDeleteClick(placeId) {
+    if (places.length === 1) {
+      const emptyPlace = getNewPlace();
+      setPlaces([emptyPlace]);
+      handleDeletePlace(placeId);
+      return;
+    }
+    setPlaces((prevPlaces) =>
+      prevPlaces.filter((place) => place.id !== placeId)
+    );
+    handleDeletePlace(placeId);
+  }
 
   return (
-    <div>
-      {places.map((place) => {
-        return (
-          <CreatePlace
-            key={place.id}
-            place={place}
-            handlePlaceChange={handlePlaceChange}
-          />
-        );
-      })}
-      <StyledButton type="button" onClick={handlePlaceClick}>
-        Add
-      </StyledButton>
-    </div>
+    <StyledSection>
+      <div>
+        {places.map((place) => {
+          return (
+            <CreatePlace
+              key={place.id}
+              place={place}
+              handlePlaceChange={handlePlaceChange}
+              handleDeletePlace={handleDeleteClick}
+            />
+          );
+        })}
+      </div>
+      <div>
+        <StyledButtonWithDisable
+          type="button"
+          onClick={handlePlaceClick}
+          disabled={isAddPlaceDisabled}
+        >
+          Add
+        </StyledButtonWithDisable>
+      </div>
+    </StyledSection>
   );
 }

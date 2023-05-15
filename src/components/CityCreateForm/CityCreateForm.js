@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppStore } from "@/lib/store";
 import { v4 as uuidv4 } from "uuid";
@@ -16,6 +16,7 @@ import {
   StyledSelect,
   StyledSection,
   StyledDivSection,
+  StyledButtonWithDisable,
 } from "./StyledCityCreate";
 import CreateHotel from "../Hotel";
 import CreatePlace from "../Place";
@@ -33,21 +34,40 @@ export default function Form() {
   const [places, setPlaces] = useState([
     { id: uuidv4(), place: "", placePrice: "" },
   ]);
-  const [food, setFood] = useState([
+  const [foods, setFood] = useState([
     { id: uuidv4(), foodName: "", foodPrice: "" },
   ]);
 
   function handleSubmit(event) {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
-    addCity({ ...data, hotels: hotels, places: places, food: food });
+    addCity({ ...data, hotels: hotels, places: places, food: foods });
     event.target.reset();
     router.push("/");
   }
 
+  const [isAddHotelDisabled, setIsAddHotelDisabled] = useState(false);
+  const [isAddPlaceDisabled, setIsAddPlaceDisabled] = useState(false);
+  const [isAddFoodDisabled, setIsAddFoodDisabled] = useState(false);
+
   function handleHotelClick() {
+    const firstHotel = hotels[0];
+    if (firstHotel.hotel === "") {
+      return;
+    }
     setHotels([...hotels, { id: uuidv4(), hotel: "", hotelPrice: "" }]);
   }
+  function handleDeleteHotel(hotelId) {
+    const emptyHotels = [{ id: "", hotel: "", hotelDay: 0, hotelDayPrice: 0 }];
+    if (hotels.length === 1) {
+      setHotels(emptyHotels);
+    } else {
+      setHotels((prevHotels) =>
+        prevHotels.filter((hotel) => hotel.id !== hotelId)
+      );
+    }
+  }
+
   function handleHotelChange(newHotel) {
     setHotels(
       hotels.map((hotel) => {
@@ -58,9 +78,27 @@ export default function Form() {
       })
     );
   }
+  useEffect(() => {
+    const isAnyHotelFieldEmpty = hotels.some((hotel) => hotel.hotel === "");
+    setIsAddHotelDisabled(isAnyHotelFieldEmpty);
+  }, [hotels]);
 
   function handlePlaceClick() {
+    const firstPlace = places[0];
+    if (firstPlace.place === "") {
+      return;
+    }
     setPlaces([...places, { id: uuidv4(), place: "", placePrice: "" }]);
+  }
+  function handleDeletePlace(placeId) {
+    const emptyPlace = [{ id: "", place: "", placePrice: 0 }];
+    if (places.length === 1) {
+      setPlaces(emptyPlace);
+    } else {
+      setPlaces((prevPlaces) =>
+        prevPlaces.filter((place) => place.id !== placeId)
+      );
+    }
   }
   function handlePlaceChange(newPlace) {
     setPlaces(
@@ -72,24 +110,44 @@ export default function Form() {
       })
     );
   }
+  useEffect(() => {
+    const isAnyPlaceFieldEmpty = places.some((place) => place.place === "");
+    setIsAddPlaceDisabled(isAnyPlaceFieldEmpty);
+  }, [places]);
 
   function handleFoodClick() {
-    setFood([...food, { id: uuidv4(), foodName: "", foodPrice: "" }]);
+    const firstFood = foods[0];
+    if (firstFood.foodName === "") {
+      return;
+    }
+    setFood([...foods, { id: uuidv4(), foodName: "", foodPrice: "" }]);
+  }
+  function handleDeleteFood(foodId) {
+    const emptyFood = [{ id: "", foodName: "", foodPrice: 0 }];
+    if (foods.length === 1) {
+      setFood(emptyFood);
+    } else {
+      setFood((prevFood) => prevFood.filter((meal) => meal.id !== foodId));
+    }
   }
   function handleFoodChange(newFood) {
     setFood(
-      food.map((food) => {
-        if (food.id === newFood.id) {
+      foods.map((meal) => {
+        if (meal.id === newFood.id) {
           return newFood;
         }
-        return food;
+        return meal;
       })
     );
   }
+  useEffect(() => {
+    const isAnyFoodFieldEmpty = foods.some((meal) => meal.foodName === "");
+    setIsAddFoodDisabled(isAnyFoodFieldEmpty);
+  }, [foods]);
 
   return (
     <>
-      <Header title="Create Your Travel" />
+      <Header title="Create Your Trip" />
       <StyledLink href="/">Back</StyledLink>
       <StyledFormContainer aria-labelledby="city" onSubmit={handleSubmit}>
         <StyledLabel htmlFor="countryName">Country:</StyledLabel>
@@ -127,14 +185,19 @@ export default function Form() {
               <CreateHotel
                 key={hotel.id}
                 handleHotelChange={handleHotelChange}
+                handleDeleteHotel={handleDeleteHotel}
                 hotel={hotel}
               />
             ))}
           </StyledDivSection>
 
-          <StyledButton type="button" onClick={handleHotelClick}>
+          <StyledButtonWithDisable
+            type="button"
+            onClick={handleHotelClick}
+            disabled={isAddHotelDisabled}
+          >
             Add
-          </StyledButton>
+          </StyledButtonWithDisable>
         </StyledSection>
 
         <StyledSection>
@@ -143,29 +206,39 @@ export default function Form() {
               <CreatePlace
                 key={place.id}
                 handlePlaceChange={handlePlaceChange}
+                handleDeletePlace={handleDeletePlace}
                 place={place}
               />
             ))}
           </StyledDivSection>
-          <StyledButton type="button" onClick={handlePlaceClick}>
+          <StyledButtonWithDisable
+            type="button"
+            onClick={handlePlaceClick}
+            disabled={isAddPlaceDisabled}
+          >
             Add
-          </StyledButton>
+          </StyledButtonWithDisable>
         </StyledSection>
 
         <StyledSection>
           <StyledDivSection>
-            {food.map((food) => (
+            {foods.map((food) => (
               <CreateFood
                 key={food.id}
                 handleFoodChange={handleFoodChange}
+                handleDeleteFood={handleDeleteFood}
                 food={food}
               />
             ))}
           </StyledDivSection>
 
-          <StyledButton type="button" onClick={handleFoodClick}>
+          <StyledButtonWithDisable
+            type="button"
+            onClick={handleFoodClick}
+            disabled={isAddFoodDisabled}
+          >
             Add
-          </StyledButton>
+          </StyledButtonWithDisable>
         </StyledSection>
         <StyledLabel htmlFor="notes">Notes:</StyledLabel>
         <StyledTextarea

@@ -3,20 +3,36 @@ import {
   StyledLabel,
   StyledInputSmall,
   StyledDiv,
+  StyledButtonWithDisable,
 } from "../CityCreateForm/StyledCityCreate";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function CreatePlace({ place, handlePlaceChange }) {
-  const [placeName, setPlacelName] = useState("");
+export default function CreatePlace({
+  place,
+  handlePlaceChange,
+  handleDeletePlace,
+}) {
+  const [placeName, setPlaceName] = useState("");
   const [placePrice, setPlacePrice] = useState(place.placePrice || 0);
 
+  useEffect(() => {
+    setPlaceName(place.place || "");
+  }, [place]);
+
   function handleChange(event) {
-    setPlacelName(event.target.value);
+    setPlaceName(event.target.value);
     handlePlaceChange({
       id: place.id,
       place: event.target.value,
-      placePrice: placePrice,
+      placePrice,
     });
+  }
+  function handleDelete() {
+    handleDeletePlace(place.id);
+  }
+
+  function canDeletePlace() {
+    return placeName !== "";
   }
   return (
     <StyledDiv>
@@ -49,6 +65,12 @@ export default function CreatePlace({ place, handlePlaceChange }) {
           defaultValue={place.placePrice}
         />
       </div>
+      <StyledButtonWithDisable
+        onClick={handleDelete}
+        disabled={!canDeletePlace()}
+      >
+        Delete
+      </StyledButtonWithDisable>
     </StyledDiv>
   );
 }
