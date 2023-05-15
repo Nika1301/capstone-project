@@ -109,7 +109,7 @@ export const StyledButtonDelete = styled.button`
 `;
 
 export const StyledPopup = styled.div`
-  height: 400px;
+  height: 300px;
   width: 600px;
   background-color: #2ec4b6;
   text-align: center;
@@ -118,6 +118,7 @@ export const StyledPopup = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   align-items: center;
+  padding: 2rem;
 
   p {
     font-size: 1.5em;
@@ -137,8 +138,8 @@ export const StyledPopup = styled.div`
   }
 
   @media (max-width: 414px) {
-    height: 40%;
-    width: 80%;
+    height: 300px;
+    width: 350px;
   }
 `;
 export const StyledBlox = styled.section`
